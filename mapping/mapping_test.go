@@ -3,21 +3,45 @@ package mapping_test
 import (
 	"github.com/bu3/anobii-to-goodreads/mapping"
 	"github.com/bu3/anobii-to-goodreads/providers/anobii"
+	"github.com/bu3/anobii-to-goodreads/providers/goodreads"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 )
 
 var _ = Describe("Mapping", func() {
+
 	Context("Anobii to Goodreads", func() {
-		It("should map", func() {
+		It("should map an item", func() {
+			mapper := mapping.AnobiiToGoodReadsMapper{}
 			anobiiItem := anobii.Anobii{
 				Title: "Foo Bar",
 			}
-			goodReads, err := mapping.AnobiiToGoodReads(anobiiItem)
+			goodReadsItem, err := mapper.MapItem(anobiiItem)
 			Expect(err).ToNot(HaveOccurred())
-			Expect(goodReads).ToNot(BeNil())
-			Expect(goodReads.Title).To(Equal(anobiiItem.Title))
+			Expect(goodReadsItem).ToNot(BeNil())
+			SingleItemExpectations(anobiiItem, goodReadsItem)
+		})
+
+		It("should map a list of items", func() {
+			mapper := mapping.AnobiiToGoodReadsMapper{}
+			anobiiItem := anobii.Anobii{
+				Title: "Foo Bar",
+			}
+			items := []anobii.Anobii{anobiiItem}
+			goodReadsItems, err := mapper.MapList(items)
+
+			Expect(err).ToNot(HaveOccurred())
+			Expect(goodReadsItems).ToNot(BeNil())
+			Expect(len(goodReadsItems)).To(Equal(len(items)))
+
+			for idx, goodReads := range goodReadsItems {
+				SingleItemExpectations(items[idx], goodReads)
+			}
 		})
 	})
 
 })
+
+func SingleItemExpectations(anobiiItem anobii.Anobii, goodReads goodreads.GoodReads) bool {
+	return Expect(goodReads.Title).To(Equal(anobiiItem.Title))
+}
