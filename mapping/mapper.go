@@ -10,6 +10,7 @@ type AnobiiToGoodReadsMapper struct{}
 func (m *AnobiiToGoodReadsMapper) MapItem(input anobii.Anobii) (goodreads.GoodReads, error) {
 	return goodreads.GoodReads{
 		Title: input.Title,
+		ISBN:  input.ISBN,
 	}, nil
 }
 

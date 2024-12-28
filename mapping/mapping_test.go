@@ -15,6 +15,7 @@ var _ = Describe("Mapping", func() {
 			mapper := mapping.AnobiiToGoodReadsMapper{}
 			anobiiItem := anobii.Anobii{
 				Title: "Foo Bar",
+				ISBN:  "1234",
 			}
 			goodReadsItem, err := mapper.MapItem(anobiiItem)
 			Expect(err).ToNot(HaveOccurred())
@@ -42,6 +43,7 @@ var _ = Describe("Mapping", func() {
 
 })
 
-func SingleItemExpectations(anobiiItem anobii.Anobii, goodReads goodreads.GoodReads) bool {
-	return Expect(goodReads.Title).To(Equal(anobiiItem.Title))
+func SingleItemExpectations(anobiiItem anobii.Anobii, goodReads goodreads.GoodReads) {
+	Expect(goodReads.Title).To(Equal(anobiiItem.Title))
+	Expect(goodReads.ISBN).To(Equal(anobiiItem.ISBN))
 }
