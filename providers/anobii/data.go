@@ -1,5 +1,7 @@
 package anobii
 
+import "fmt"
+
 type Anobii struct {
 	ISBN              string `csv:"ISBN"`
 	Title             string `csv:"Title"`
@@ -15,4 +17,12 @@ type Anobii struct {
 	ReadingStatus     string `csv:"Reading status"`
 	Vote              string `csv:"Vote"`
 	Tags              string `csv:"Tags"`
+}
+
+func (a Anobii) String() string {
+	return fmt.Sprintf("ISBN: %q, Title: %q, Subtitle: %q, Author: %q",
+		a.ISBN,
+		a.Title,
+		a.Subtitle,
+		a.Author)
 }
