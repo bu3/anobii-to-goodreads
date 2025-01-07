@@ -9,7 +9,6 @@ import (
 )
 
 var _ = Describe("Mapping", func() {
-
 	Context("Anobii to Goodreads", func() {
 		It("should map an item", func() {
 			mapper := mapping.AnobiiToGoodReadsMapper{}
