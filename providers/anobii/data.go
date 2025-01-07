@@ -20,7 +20,7 @@ type Anobii struct {
 }
 
 func (a Anobii) String() string {
-	return fmt.Sprintf("ISBN: %q, Title: %q, Subtitle: %q, Author: %q",
+	return fmt.Sprintf("ISBN: %s, Title: %s, Subtitle: %s, Author: %s",
 		a.ISBN,
 		a.Title,
 		a.Subtitle,
