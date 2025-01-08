@@ -2,6 +2,7 @@ package acceptance_test
 
 import (
 	"bufio"
+	"fmt"
 	"github.com/bu3/anobii-to-goodreads/convert"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
@@ -10,28 +11,47 @@ import (
 	"strings"
 )
 
-var _ = Describe("Convert", func() {
+const generatedFilePath = "../testdata/goodreads_generated_output.csv"
+
+var _ = Describe("Convert", Ordered, func() {
 	Context("Anobii to Goodreads", func() {
 		It("should match expected file", func() {
 			expectedContent, err := readAndNormalize("../testdata/goodreads_expected.csv")
-			if err != nil {
-				log.Fatal(err)
-			}
 
-			generatedFile := "../testdata/goodreads_generated_output.csv"
-			err = convert.Convert("../testdata/anobii-exported.csv", generatedFile)
+			err = convert.Convert("../testdata/anobii-exported.csv", generatedFilePath)
 			Expect(err).ToNot(HaveOccurred())
 
-			generatedFileContent, err := readAndNormalize(generatedFile)
+			generatedFileContent, err := readAndNormalize(generatedFilePath)
 			if err != nil {
 				log.Fatal(err)
 			}
 
 			Expect(string(expectedContent)).To(Equal(string(generatedFileContent)))
 		})
-	})
 
+		AfterAll(func() {
+			deleteGeneratedFile()
+		})
+	})
 })
+
+func deleteGeneratedFile() {
+	if _, err := os.Stat(generatedFilePath); err == nil {
+		// File exists, proceed to delete
+		err = os.Remove(generatedFilePath)
+		if err != nil {
+			fmt.Printf("Error deleting file: %v\n", err)
+			return
+		}
+		fmt.Printf("File %s deleted successfully.\n", generatedFilePath)
+	} else if os.IsNotExist(err) {
+		// File does not exist
+		fmt.Printf("File %s does not exist.\n", generatedFilePath)
+	} else {
+		// An unexpected error occurred
+		fmt.Printf("Error checking file: %v\n", err)
+	}
+}
 
 func readAndNormalize(filename string) ([]byte, error) {
 	file, err := os.Open(filename)
