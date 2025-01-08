@@ -2,3 +2,4 @@
 examples
 .DS_Store
 
+testdata/goodreads_generated_output.csv
