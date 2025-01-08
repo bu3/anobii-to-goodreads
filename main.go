@@ -19,10 +19,16 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	for _, client := range anobiiBooks {
-		fmt.Println(client)
+	for _, anobiiBook := range anobiiBooks {
+		fmt.Println(anobiiBook)
 	}
 
 	mapper := mapping.AnobiiToGoodReadsMapper{}
-	mapper.MapList(anobiiBooks)
+	goodReadsItems, err := mapper.MapList(anobiiBooks)
+	if err != nil {
+		panic(err)
+	}
+	for _, goodReadsItem := range goodReadsItems {
+		fmt.Println(goodReadsItem)
+	}
 }

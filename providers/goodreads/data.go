@@ -1,5 +1,7 @@
 package goodreads
 
+import "fmt"
+
 type GoodReads struct {
 	Title                   string `csv:"Title"`
 	Author                  string `csv:"Author"`
@@ -14,4 +16,11 @@ type GoodReads struct {
 	DateAddedShelves        string `csv:"Date Added,Shelves"`
 	Bookshelves             string `csv:"Bookshelves"`
 	MyReview                string `csv:"My Review"`
+}
+
+func (a GoodReads) String() string {
+	return fmt.Sprintf("ISBN: %s, Title: %s, Author: %s",
+		a.ISBN,
+		a.Title,
+		a.Author)
 }
