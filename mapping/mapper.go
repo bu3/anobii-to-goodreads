@@ -7,14 +7,14 @@ import (
 
 type AnobiiToGoodReadsMapper struct{}
 
-func (m *AnobiiToGoodReadsMapper) MapItem(input anobii.Anobii) (goodreads.GoodReads, error) {
+func (m *AnobiiToGoodReadsMapper) MapItem(input *anobii.Anobii) (goodreads.GoodReads, error) {
 	return goodreads.GoodReads{
 		Title: input.Title,
 		ISBN:  input.ISBN,
 	}, nil
 }
 
-func (m *AnobiiToGoodReadsMapper) MapList(inputs []anobii.Anobii) ([]goodreads.GoodReads, error) {
+func (m *AnobiiToGoodReadsMapper) MapList(inputs []*anobii.Anobii) ([]goodreads.GoodReads, error) {
 	var outputs []goodreads.GoodReads
 	for _, input := range inputs {
 		item, _ := m.MapItem(input)

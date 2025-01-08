@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/bu3/anobii-to-goodreads/mapping"
 	"github.com/bu3/anobii-to-goodreads/providers/anobii"
 	"os"
 )
@@ -21,4 +22,7 @@ func main() {
 	for _, client := range anobiiBooks {
 		fmt.Println(client)
 	}
+
+	mapper := mapping.AnobiiToGoodReadsMapper{}
+	mapper.MapList(anobiiBooks)
 }

@@ -16,10 +16,10 @@ var _ = Describe("Mapping", func() {
 				Title: "Foo Bar",
 				ISBN:  "1234",
 			}
-			goodReadsItem, err := mapper.MapItem(anobiiItem)
+			goodReadsItem, err := mapper.MapItem(&anobiiItem)
 			Expect(err).ToNot(HaveOccurred())
 			Expect(goodReadsItem).ToNot(BeNil())
-			SingleItemExpectations(anobiiItem, goodReadsItem)
+			SingleItemExpectations(&anobiiItem, goodReadsItem)
 		})
 
 		It("should map a list of items", func() {
@@ -27,7 +27,7 @@ var _ = Describe("Mapping", func() {
 			anobiiItem := anobii.Anobii{
 				Title: "Foo Bar",
 			}
-			items := []anobii.Anobii{anobiiItem}
+			items := []*anobii.Anobii{&anobiiItem}
 			goodReadsItems, err := mapper.MapList(items)
 
 			Expect(err).ToNot(HaveOccurred())
@@ -42,7 +42,7 @@ var _ = Describe("Mapping", func() {
 
 })
 
-func SingleItemExpectations(anobiiItem anobii.Anobii, goodReads goodreads.GoodReads) {
+func SingleItemExpectations(anobiiItem *anobii.Anobii, goodReads goodreads.GoodReads) {
 	Expect(goodReads.Title).To(Equal(anobiiItem.Title))
 	Expect(goodReads.ISBN).To(Equal(anobiiItem.ISBN))
 }
