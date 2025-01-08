@@ -1,6 +1,8 @@
 package anobii
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type Anobii struct {
 	ISBN              string `csv:"ISBN"`

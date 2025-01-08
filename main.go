@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"github.com/bu3/anobii-to-goodreads/providers/anobii"
-	"github.com/gocarina/gocsv"
 	"os"
 )
 
@@ -15,8 +14,8 @@ func main() {
 	}
 	defer clientsFile.Close()
 
-	anobiiBooks := []*anobii.Anobii{}
-	if err := gocsv.UnmarshalFile(clientsFile, &anobiiBooks); err != nil {
+	anobiiBooks, err := anobii.Read(anobiiFile)
+	if err != nil {
 		panic(err)
 	}
 	for _, client := range anobiiBooks {
