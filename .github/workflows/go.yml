@@ -26,3 +26,7 @@ jobs:
 
     - name: Test
       run: go test -v ./...
+
+    #    https://github.com/marketplace/actions/go-test-coverage
+    - name: go-test-coverage
+      uses: vladopajic/go-test-coverage@v2.11.1
