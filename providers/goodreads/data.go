@@ -14,6 +14,7 @@ type GoodReads struct {
 	OriginalPublicationYear string `csv:"Original Publication Year"`
 	DateRead                string `csv:"Date Read"`
 	DateAddedShelves        string `csv:"Date Added,Shelves"`
+	Shelves                 string `csv:"Shelves"`
 	Bookshelves             string `csv:"Bookshelves"`
 	MyReview                string `csv:"My Review"`
 }
