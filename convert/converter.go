@@ -2,20 +2,17 @@ package convert
 
 import (
 	"fmt"
+	"github.com/bu3/anobii-to-goodreads/file"
 	"github.com/bu3/anobii-to-goodreads/mapping"
 	"github.com/bu3/anobii-to-goodreads/providers/anobii"
 	"github.com/bu3/anobii-to-goodreads/providers/goodreads"
-	"os"
 )
 
 func Convert(inputFile string, outputFile string) error {
-	clientsFile, err := os.OpenFile(inputFile, os.O_RDWR|os.O_CREATE, os.ModePerm)
-	if err != nil {
-		panic(err)
-	}
-	defer clientsFile.Close()
+	fileManager := file.New()
+	anobiiFileReader := anobii.New(fileManager)
 
-	anobiiBooks, err := anobii.Read(inputFile)
+	anobiiBooks, err := anobiiFileReader.Read(inputFile)
 	if err != nil {
 		panic(err)
 	}
