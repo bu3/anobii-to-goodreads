@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"github.com/bu3/anobii-to-goodreads/convert"
+	"github.com/bu3/anobii-to-goodreads/mapping"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	"log"
@@ -16,9 +17,14 @@ const generatedFilePath = "../testdata/goodreads_generated_output.csv"
 var _ = Describe("Convert", Ordered, func() {
 	Context("Anobii to Goodreads", func() {
 		It("should match expected file", func() {
+			mapper := mapping.New()
+			converter := convert.Converter{
+				Mapper: mapper,
+			}
+
 			expectedContent, err := readAndNormalize("../testdata/goodreads_expected.csv")
 
-			err = convert.Convert("../testdata/anobii-exported.csv", generatedFilePath)
+			err = converter.Convert("../testdata/anobii-exported.csv", generatedFilePath)
 			Expect(err).ToNot(HaveOccurred())
 
 			generatedFileContent, err := readAndNormalize(generatedFilePath)

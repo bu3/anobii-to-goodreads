@@ -11,7 +11,7 @@ import (
 var _ = Describe("Mapping", func() {
 	Context("Anobii to Goodreads", func() {
 		It("should map an item", func() {
-			mapper := mapping.AnobiiToGoodReadsMapper{}
+			mapper := mapping.New()
 			anobiiItem := anobii.Anobii{
 				Title:  "Foo Bar",
 				ISBN:   "1234",
@@ -24,7 +24,7 @@ var _ = Describe("Mapping", func() {
 		})
 
 		It("should map a list of items", func() {
-			mapper := mapping.AnobiiToGoodReadsMapper{}
+			mapper := mapping.New()
 			anobiiItem := anobii.Anobii{
 				Title:  "Foo Bar",
 				ISBN:   "1234",

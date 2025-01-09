@@ -5,9 +5,18 @@ import (
 	"github.com/bu3/anobii-to-goodreads/providers/goodreads"
 )
 
-type AnobiiToGoodReadsMapper struct{}
+type AnobiiToGoodReadsMapper interface {
+	MapItem(input *anobii.Anobii) (goodreads.GoodReads, error)
+	MapList(inputs []*anobii.Anobii) (*[]goodreads.GoodReads, error)
+}
 
-func (m *AnobiiToGoodReadsMapper) MapItem(input *anobii.Anobii) (goodreads.GoodReads, error) {
+func New() AnobiiToGoodReadsMapper {
+	return &anobiiToGoodReadsMapper{}
+}
+
+type anobiiToGoodReadsMapper struct{}
+
+func (m *anobiiToGoodReadsMapper) MapItem(input *anobii.Anobii) (goodreads.GoodReads, error) {
 	return goodreads.GoodReads{
 		Title:  input.Title,
 		ISBN:   input.ISBN,
@@ -15,7 +24,7 @@ func (m *AnobiiToGoodReadsMapper) MapItem(input *anobii.Anobii) (goodreads.GoodR
 	}, nil
 }
 
-func (m *AnobiiToGoodReadsMapper) MapList(inputs []*anobii.Anobii) (*[]goodreads.GoodReads, error) {
+func (m *anobiiToGoodReadsMapper) MapList(inputs []*anobii.Anobii) (*[]goodreads.GoodReads, error) {
 	var outputs []goodreads.GoodReads
 	for _, input := range inputs {
 		item, _ := m.MapItem(input)
