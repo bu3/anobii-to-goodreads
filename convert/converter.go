@@ -11,13 +11,9 @@ import (
 func Convert(inputFile string, outputFile string) error {
 	fileManager := file.New()
 	anobiiFileReader := anobii.New(fileManager)
-
 	anobiiBooks, err := anobiiFileReader.Read(inputFile)
 	if err != nil {
 		panic(err)
-	}
-	for _, anobiiBook := range anobiiBooks {
-		fmt.Println(anobiiBook)
 	}
 
 	mapper := mapping.AnobiiToGoodReadsMapper{}
