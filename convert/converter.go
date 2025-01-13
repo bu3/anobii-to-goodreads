@@ -8,9 +8,14 @@ import (
 	"github.com/bu3/anobii-to-goodreads/providers/goodreads"
 )
 
+type Converter struct {
+	anobiiFileReader anobii.AnobiiFileReader
+}
+
 func Convert(inputFile string, outputFile string) error {
 	fileManager := file.New()
 	anobiiFileReader := anobii.New(fileManager)
+	goodReadsFile := goodreads.New(fileManager)
 	anobiiBooks, err := anobiiFileReader.Read(inputFile)
 	if err != nil {
 		panic(err)
@@ -24,7 +29,8 @@ func Convert(inputFile string, outputFile string) error {
 	for _, goodReadsItem := range *goodReadsItems {
 		fmt.Println(goodReadsItem)
 	}
-	goodreads.Write(outputFile, goodReadsItems)
+
+	goodReadsFile.Write(outputFile, goodReadsItems)
 
 	return nil
 }
