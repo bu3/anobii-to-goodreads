@@ -1,17 +1,18 @@
 package mapping
 
 import (
-	"github.com/bu3/anobii-to-goodreads/providers/anobii"
-	"github.com/bu3/anobii-to-goodreads/providers/goodreads"
+	"github.com/bu3/anobii-to-goodreads/pkg/providers/anobii"
+	"github.com/bu3/anobii-to-goodreads/pkg/providers/goodreads"
 )
 
 type AnobiiToGoodReadsMapper struct{}
 
 func (m *AnobiiToGoodReadsMapper) MapItem(input *anobii.Anobii) (goodreads.GoodReads, error) {
 	return goodreads.GoodReads{
-		Title:  input.Title,
-		ISBN:   input.ISBN,
-		Author: input.Author,
+		Title:    input.Title,
+		ISBN:     input.ISBN,
+		Author:   input.Author,
+		MyRating: input.Vote,
 	}, nil
 }
 

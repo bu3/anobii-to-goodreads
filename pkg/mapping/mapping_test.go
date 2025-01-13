@@ -1,9 +1,9 @@
 package mapping_test
 
 import (
-	"github.com/bu3/anobii-to-goodreads/mapping"
-	"github.com/bu3/anobii-to-goodreads/providers/anobii"
-	"github.com/bu3/anobii-to-goodreads/providers/goodreads"
+	"github.com/bu3/anobii-to-goodreads/pkg/mapping"
+	"github.com/bu3/anobii-to-goodreads/pkg/providers/anobii"
+	"github.com/bu3/anobii-to-goodreads/pkg/providers/goodreads"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 )
@@ -16,6 +16,7 @@ var _ = Describe("Mapping", func() {
 				Title:  "Foo Bar",
 				ISBN:   "1234",
 				Author: "John Doe",
+				Vote:   "3",
 			}
 			goodReadsItem, err := mapper.MapItem(&anobiiItem)
 			Expect(err).ToNot(HaveOccurred())
@@ -49,4 +50,5 @@ func SingleItemExpectations(anobiiItem *anobii.Anobii, goodReads goodreads.GoodR
 	Expect(goodReads.Title).To(Equal(anobiiItem.Title))
 	Expect(goodReads.ISBN).To(Equal(anobiiItem.ISBN))
 	Expect(goodReads.Author).To(Equal(anobiiItem.Author))
+	Expect(goodReads.MyRating).To(Equal(anobiiItem.Vote))
 }
