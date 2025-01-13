@@ -1,9 +1,9 @@
 package mapping_test
 
 import (
-	"github.com/bu3/anobii-to-goodreads/mapping"
-	"github.com/bu3/anobii-to-goodreads/providers/anobii"
-	"github.com/bu3/anobii-to-goodreads/providers/goodreads"
+	"github.com/bu3/anobii-to-goodreads/pkg/mapping"
+	"github.com/bu3/anobii-to-goodreads/pkg/providers/anobii"
+	"github.com/bu3/anobii-to-goodreads/pkg/providers/goodreads"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 )

@@ -1,8 +1,8 @@
 package mapping
 
 import (
-	"github.com/bu3/anobii-to-goodreads/providers/anobii"
-	"github.com/bu3/anobii-to-goodreads/providers/goodreads"
+	"github.com/bu3/anobii-to-goodreads/pkg/providers/anobii"
+	"github.com/bu3/anobii-to-goodreads/pkg/providers/goodreads"
 )
 
 type AnobiiToGoodReadsMapper struct{}

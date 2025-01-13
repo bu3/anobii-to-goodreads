@@ -3,7 +3,7 @@ package acceptance_test
 import (
 	"bufio"
 	"fmt"
-	"github.com/bu3/anobii-to-goodreads/convert"
+	"github.com/bu3/anobii-to-goodreads/pkg/convert"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	"log"

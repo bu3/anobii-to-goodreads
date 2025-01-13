@@ -1,7 +1,7 @@
 package anobii
 
 import (
-	"github.com/bu3/anobii-to-goodreads/file"
+	"github.com/bu3/anobii-to-goodreads/pkg/file"
 	"github.com/gocarina/gocsv"
 )
 

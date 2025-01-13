@@ -2,10 +2,10 @@ package convert
 
 import (
 	"fmt"
-	"github.com/bu3/anobii-to-goodreads/file"
-	"github.com/bu3/anobii-to-goodreads/mapping"
-	"github.com/bu3/anobii-to-goodreads/providers/anobii"
-	"github.com/bu3/anobii-to-goodreads/providers/goodreads"
+	"github.com/bu3/anobii-to-goodreads/pkg/file"
+	"github.com/bu3/anobii-to-goodreads/pkg/mapping"
+	"github.com/bu3/anobii-to-goodreads/pkg/providers/anobii"
+	"github.com/bu3/anobii-to-goodreads/pkg/providers/goodreads"
 )
 
 type Converter struct {
