@@ -5,21 +5,21 @@ import (
 	"github.com/gocarina/gocsv"
 )
 
-type AnobiiFileReader interface {
+type AnobiiFile interface {
 	Read(anobiiFile string) ([]*Anobii, error)
 }
 
-func New(manager file.Manager) AnobiiFileReader {
-	return &anobiiFileReader{
+func New(manager file.Manager) AnobiiFile {
+	return &anobiiFile{
 		fileManager: manager,
 	}
 }
 
-type anobiiFileReader struct {
+type anobiiFile struct {
 	fileManager file.Manager
 }
 
-func (a *anobiiFileReader) Read(anobiiFile string) ([]*Anobii, error) {
+func (a *anobiiFile) Read(anobiiFile string) ([]*Anobii, error) {
 	inputFile, err := a.fileManager.ReadFile(anobiiFile)
 	if err != nil {
 		return nil, err

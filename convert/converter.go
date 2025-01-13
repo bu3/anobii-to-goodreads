@@ -9,7 +9,7 @@ import (
 )
 
 type Converter struct {
-	anobiiFileReader anobii.AnobiiFileReader
+	anobiiFileReader anobii.AnobiiFile
 }
 
 func Convert(inputFile string, outputFile string) error {
@@ -30,7 +30,9 @@ func Convert(inputFile string, outputFile string) error {
 		fmt.Println(goodReadsItem)
 	}
 
-	goodReadsFile.Write(outputFile, goodReadsItems)
-
+	err = goodReadsFile.Write(outputFile, goodReadsItems)
+	if err != nil {
+		panic(err)
+	}
 	return nil
 }
