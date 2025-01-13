@@ -16,6 +16,7 @@ var _ = Describe("Mapping", func() {
 				Title:  "Foo Bar",
 				ISBN:   "1234",
 				Author: "John Doe",
+				Vote:   "3",
 			}
 			goodReadsItem, err := mapper.MapItem(&anobiiItem)
 			Expect(err).ToNot(HaveOccurred())
@@ -49,4 +50,5 @@ func SingleItemExpectations(anobiiItem *anobii.Anobii, goodReads goodreads.GoodR
 	Expect(goodReads.Title).To(Equal(anobiiItem.Title))
 	Expect(goodReads.ISBN).To(Equal(anobiiItem.ISBN))
 	Expect(goodReads.Author).To(Equal(anobiiItem.Author))
+	Expect(goodReads.MyRating).To(Equal(anobiiItem.Vote))
 }
