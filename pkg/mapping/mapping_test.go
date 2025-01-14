@@ -9,14 +9,17 @@ import (
 )
 
 var _ = Describe("Mapping", func() {
+
+	mapper := mapping.AnobiiToGoodReadsMapper{}
+
 	Context("Anobii to Goodreads", func() {
 		It("should map an item", func() {
-			mapper := mapping.AnobiiToGoodReadsMapper{}
 			anobiiItem := anobii.Anobii{
-				Title:  "Foo Bar",
-				ISBN:   "1234",
-				Author: "John Doe",
-				Vote:   "3",
+				Title:         "Foo Bar",
+				ISBN:          "1234",
+				Author:        "John Doe",
+				Vote:          "3",
+				ReadingStatus: "Finished on 2023-03-30",
 			}
 			goodReadsItem, err := mapper.MapItem(&anobiiItem)
 			Expect(err).ToNot(HaveOccurred())
@@ -27,9 +30,11 @@ var _ = Describe("Mapping", func() {
 		It("should map a list of items", func() {
 			mapper := mapping.AnobiiToGoodReadsMapper{}
 			anobiiItem := anobii.Anobii{
-				Title:  "Foo Bar",
-				ISBN:   "1234",
-				Author: "John Doe",
+				Title:         "Foo Bar",
+				ISBN:          "1234",
+				Author:        "John Doe",
+				Vote:          "3",
+				ReadingStatus: "Finished on 2023-03-30",
 			}
 			items := []*anobii.Anobii{&anobiiItem}
 			goodReadsItems, err := mapper.MapList(items)
@@ -42,13 +47,37 @@ var _ = Describe("Mapping", func() {
 				SingleItemExpectations(items[idx], goodReads)
 			}
 		})
+
+		It("should map reading status", func() {
+			data := map[string]string{
+				"":                       "",
+				"something odd":          "",
+				"Finished on 2023-03-30": "2023-03-30",
+				"Finished on 2023":       "2023-01-01",
+			}
+			for key, value := range data {
+				anobiiItem := anobii.Anobii{
+					ReadingStatus: key,
+				}
+				goodReadsItem, err := mapper.MapItem(&anobiiItem)
+				Expect(err).ToNot(HaveOccurred())
+				Expect(goodReadsItem).ToNot(BeNil())
+				Expect(goodReadsItem.DateRead).To(Equal(value))
+			}
+		})
 	})
 
 })
 
 func SingleItemExpectations(anobiiItem *anobii.Anobii, goodReads goodreads.GoodReads) {
+	Expect(goodReads.Title).To(Not(BeEmpty()))
 	Expect(goodReads.Title).To(Equal(anobiiItem.Title))
+	Expect(goodReads.ISBN).To(Not(BeEmpty()))
 	Expect(goodReads.ISBN).To(Equal(anobiiItem.ISBN))
+	Expect(goodReads.Author).To(Not(BeEmpty()))
 	Expect(goodReads.Author).To(Equal(anobiiItem.Author))
+	Expect(goodReads.MyRating).To(Not(BeEmpty()))
 	Expect(goodReads.MyRating).To(Equal(anobiiItem.Vote))
+	Expect(goodReads.DateRead).To(Not(BeEmpty()))
+	Expect(goodReads.DateRead).To(Equal("2023-03-30"))
 }
