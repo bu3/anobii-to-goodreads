@@ -4,6 +4,7 @@ import (
 	"github.com/bu3/anobii-to-goodreads/pkg/providers/anobii"
 	"github.com/bu3/anobii-to-goodreads/pkg/providers/goodreads"
 	"regexp"
+	"strings"
 )
 
 type AnobiiToGoodReadsMapper struct{}
@@ -15,6 +16,7 @@ func (m *AnobiiToGoodReadsMapper) MapItem(input *anobii.Anobii) (goodreads.GoodR
 		Author:   input.Author,
 		MyRating: input.Vote,
 		DateRead: parseDateRead(input.ReadingStatus),
+		Shelves:  parseStatus(input.ReadingStatus),
 	}, nil
 }
 
@@ -25,6 +27,23 @@ func (m *AnobiiToGoodReadsMapper) MapList(inputs []*anobii.Anobii) (*[]goodreads
 		outputs = append(outputs, item)
 	}
 	return &outputs, nil
+}
+
+func parseStatus(readingStatus string) string {
+	status := "to-read"
+	if strings.Contains(strings.ToLower(readingStatus), "finished") {
+		status = "read"
+	}
+
+	if strings.Contains(strings.ToLower(readingStatus), "being read") {
+		status = "reading"
+	}
+
+	if strings.Contains(strings.ToLower(readingStatus), "abandoned") {
+		status = "abandoned"
+	}
+
+	return status
 }
 
 func parseDateRead(readingStatus string) string {

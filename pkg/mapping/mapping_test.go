@@ -48,7 +48,7 @@ var _ = Describe("Mapping", func() {
 			}
 		})
 
-		It("should map reading status", func() {
+		It("should map reading status to date", func() {
 			data := map[string]string{
 				"":                       "",
 				"something odd":          "",
@@ -63,6 +63,26 @@ var _ = Describe("Mapping", func() {
 				Expect(err).ToNot(HaveOccurred())
 				Expect(goodReadsItem).ToNot(BeNil())
 				Expect(goodReadsItem.DateRead).To(Equal(value))
+			}
+		})
+
+		It("should map reading status", func() {
+			data := map[string]string{
+				"":                            "to-read",
+				"something odd":               "to-read",
+				"Finished on 2023-03-30":      "read",
+				"Finished on 2023":            "read",
+				"Being read since 2023-02-23": "reading",
+				"Abandoned on 2011-01-01":     "abandoned",
+			}
+			for key, value := range data {
+				anobiiItem := anobii.Anobii{
+					ReadingStatus: key,
+				}
+				goodReadsItem, err := mapper.MapItem(&anobiiItem)
+				Expect(err).ToNot(HaveOccurred())
+				Expect(goodReadsItem).ToNot(BeNil())
+				Expect(goodReadsItem.Shelves).To(Equal(value))
 			}
 		})
 	})
